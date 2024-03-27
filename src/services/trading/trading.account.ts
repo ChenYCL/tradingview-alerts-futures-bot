@@ -4,7 +4,7 @@ import { Side, Trade } from '../../entities/trade.entities'
 import { getRelativeOrderSize } from './helpers/getRelativeOrderSize'
 import { getTokensAmount } from './helpers/getTokensAmount'
 import { TradingExecutor } from './trading.executor'
-import { agent, useAgent } from "../../proxyClient"
+import { agent } from "../../proxyClient"
 
 
 export class TradingAccount {
@@ -39,7 +39,7 @@ export class TradingAccount {
       : process.env.TRADING_SECRET
     this.exchange.enableRateLimit = true
 
-    if (useAgent()) {
+    if (agent) {
       this.exchange.agent = agent;
     }
 
