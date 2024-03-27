@@ -4,6 +4,8 @@ import { Side, Trade } from '../../entities/trade.entities'
 import { getRelativeOrderSize } from './helpers/getRelativeOrderSize'
 import { getTokensAmount } from './helpers/getTokensAmount'
 import { TradingExecutor } from './trading.executor'
+import { agent, useAgent } from "../../proxyClient"
+
 
 export class TradingAccount {
   private static instance: TradingAccount
@@ -36,6 +38,10 @@ export class TradingAccount {
       ? process.env.PAPER_TRADING_SECRET
       : process.env.TRADING_SECRET
     this.exchange.enableRateLimit = true
+
+    if (useAgent()) {
+      this.exchange.agent = agent;
+    }
 
     this.exchange.setSandboxMode(paper)
   }
